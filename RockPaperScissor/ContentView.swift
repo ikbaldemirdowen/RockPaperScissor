@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     var options = ["Rock", "Paper", "Scissor"]
     @State private var randomNum = Int.random(in: 0..<3)
-    @State private var computersSelection : String = ""
+    @State private var computersSelection : String = " "
     var body: some View {
         VStack
         {
