@@ -20,6 +20,10 @@ struct ContentView: View {
     @State private var gameTurn = 0
     @State private var gameEnd = false
     @State private var roundResult = false
+    @State private var eachRoundAlertTitle = ""
+    @State private var eachRoundAlertMessage = ""
+    @State private var roundEnded = false
+    
     var body: some View {
         VStack
         {
@@ -35,10 +39,9 @@ struct ContentView: View {
                 { number in
                     Button()
                     {
+                        roundEnded = true
                         computersSelection = options.randomElement()!
                         usersSelection = options[number]
-                        print(usersSelection)
-                        print(computersSelection)
                         winOrLose()
                         gameEnded()
                         
@@ -48,6 +51,7 @@ struct ContentView: View {
                             .background(.secondary)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
+                    .padding(20)
                 }
             }
         }
@@ -60,6 +64,15 @@ struct ContentView: View {
         } message: {
             Text(alertMessage)
         }
+        .alert(eachRoundAlertTitle, isPresented: $roundEnded)
+        {
+            Button("OK")
+            {
+                
+            }
+        } message: {
+            Text(eachRoundAlertMessage)
+        }
     }
     func winOrLose()
     {
@@ -67,47 +80,83 @@ struct ContentView: View {
         if usersSelection == "Rock" && computersSelection == "Scissor"
         {
             userScore += 1
-            computerScore -= 1
+            if computerScore != 0
+            {
+                computerScore -= 1
+            }
+            eachRoundAlertTitle = "You won this round!"
+            eachRoundAlertMessage = "You chose \(usersSelection), computer chose \(computersSelection)"
         }
         else if usersSelection == "Rock" && computersSelection == "Paper"
         {
             computerScore += 1
-            userScore -= 1
+            if userScore != 0
+            {
+                userScore -= 1
+            }
+            eachRoundAlertTitle = "You lost this round!"
+            eachRoundAlertMessage = "You chose \(usersSelection), computer chose \(computersSelection)"
         }
         else if usersSelection == "Rock" && computersSelection == "Rock"
         {
             userScore = userScore
             computerScore = computerScore
+            eachRoundAlertTitle = "Draw!"
+            eachRoundAlertMessage = "You chose \(usersSelection), computer chose \(computersSelection)"
         }
         else if usersSelection == "Paper" && computersSelection == "Rock"
         {
             userScore += 1
-            computerScore -= 1
+            if computerScore != 0
+            {
+                computerScore -= 1
+            }
+            eachRoundAlertTitle = "You won this round!"
+            eachRoundAlertMessage = "You chose \(usersSelection), computer chose \(computersSelection)"
         }
         else if usersSelection == "Paper" && computersSelection == "Paper"
         {
             userScore = userScore
             computerScore = computerScore
+            eachRoundAlertTitle = "Draw!"
+            eachRoundAlertMessage = "You chose \(usersSelection), computer chose \(computersSelection)"
         }
         else if usersSelection == "Paper" && computersSelection == "Scissor"
         {
             computerScore += 1
-            userScore -= 1
+            if userScore != 0
+            {
+                userScore -= 1
+            }
+            eachRoundAlertTitle = "You lost this round!"
+            eachRoundAlertMessage = "You chose \(usersSelection), computer chose \(computersSelection)"
         }
         else if usersSelection == "Scissor" && computersSelection == "Rock"
         {
             computerScore += 1
-            userScore -= 1
+            if userScore != 0
+            {
+                userScore -= 1
+            }
+            eachRoundAlertTitle = "You lost this round!"
+            eachRoundAlertMessage = "You chose \(usersSelection), computer chose \(computersSelection)"
         }
         else if usersSelection == "Scissor" && computersSelection == "Paper"
         {
             userScore += 1
-            computerScore -= 1
+            if computerScore != 0
+            {
+                computerScore -= 1
+            }
+            eachRoundAlertTitle = "You won this round!"
+            eachRoundAlertMessage = "You chose \(usersSelection), computer chose \(computersSelection)"
         }
         else if usersSelection == "Scissor" && computersSelection == "Scissor"
         {
             userScore = userScore
             computerScore = computerScore
+            eachRoundAlertTitle = "Draw!"
+            eachRoundAlertMessage = "You chose \(usersSelection), computer chose \(computersSelection)"
         }
     }
     func gameEnded()
@@ -117,17 +166,17 @@ struct ContentView: View {
             gameEnd = true
             if userScore > computerScore
             {
-                alertTitle = "YOU WON!"
+                alertTitle = "GAME OVER! YOU WON!"
                 alertMessage = "Your score was \(score), computer's score was \(computerScore)"
             }
             else if userScore == computerScore
             {
-                alertTitle = "DRAW!"
+                alertTitle = "GAME OVER! IT WAS A DRAW!"
                 alertMessage = "Your score was \(score), computer's score was \(computerScore)"
             }
             else
             {
-                alertTitle = "YOU LOST"
+                alertTitle = "GAME OVER! YOU LOST"
                 alertMessage = "Your score was \(score), computer's score was \(computerScore)"
             }
             userScore = 0
