@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "1024.png",
+      "filename" : "png-transparent-rock-paper-scissors-computer-icons-scissors-game-white-face-2.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "1024@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "1024@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
